@@ -13,12 +13,13 @@ functions that only get used by me in specific ways
 You can install the development version of Greatrex.Functions like so:
 
 ``` r
-# GITHUB?
+ #install.packages(remotes)  # As needed
+ remotes::install_github('hgreatrex/Greatrex.Functions',force=TRUE)
 ```
 
 ## What functions are there?
 
-Let’s just list them
+Let’s just list them for now. More to come
 
 ``` r
 library(Greatrex.Functions)
@@ -26,11 +27,3 @@ ls("package:Greatrex.Functions")
 #> [1] "conditionalcreate"     "makedates"             "palettemaker"         
 #> [4] "rasterstack_mean_fast"
 ```
-
-## note to self
-
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date. `devtools::build_readme()` is handy for this. You could also
-use GitHub Actions to re-render `README.Rmd` every time you push. An
-example workflow can be found here:
-<https://github.com/r-lib/actions/tree/v1/examples>.
