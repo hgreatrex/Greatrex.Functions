@@ -7,6 +7,7 @@ Maintainer: Helen Greatrex <hgreatrex@gmail.com>
 Description: Functions I find useful or that underpin many of my scripts
     These might be tiny things from stack overflow answers, little ways to make coding easier,
     or weird custom functions that only get used by me in specific ways
+URL: https://github.com/hgreatrex/Greatrex.Functions
 License: Open Commons
 Encoding: UTF-8
 LazyData: true
