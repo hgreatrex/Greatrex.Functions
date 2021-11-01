@@ -1,0 +1,20 @@
+Package: Greatrex.Functions
+Type: Package
+Title: Core Functions for Dr Helen Greatrex's code
+Version: 0.1.1
+Author: Helen Greatrex
+Maintainer: Helen Greatrex <hgreatrex@gmail.com>
+Description: Functions I find useful or that underpin many of my scripts
+    These might be tiny things from stack overflow answers, little ways to make coding easier,
+    or weird custom functions that only get used by me in specific ways
+License: Open Commons
+Encoding: UTF-8
+LazyData: true
+Depends:
+    R (>= 4.1)
+Imports:
+	raster (>= 3.5.1),
+	RColorBrewer (>= 1.1.1),
+	viridis (>= 0.6),
+	paletteer (>= 1.3.0)
+RoxygenNote: 7.1.2
