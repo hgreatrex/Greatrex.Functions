@@ -6,41 +6,45 @@
 \usage{
 JumpDate(
   DateIn = NA,
-  TimeBack = NA,
+  TimeJump = NA,
   TimeUnit = NA,
   Direction = "back",
   verbose = FALSE
 )
 }
 \arguments{
-\item{DateIn}{Date: An R-Date, or something that can be converted automatically by as.Date}
+\item{DateIn}{An R-Date, or something that can be converted automatically by as.Date}
 
-\item{TimeUnit}{string: String. Anything that works in seq.Date e.g. "years" "months" "days"}
+\item{TimeJump}{Number of units back/forward e.g. 3 days, TimeJump=3}
 
-\item{Direction}{string: "back" for back, everything else goes forward}
+\item{TimeUnit}{A character string, containing one of "day", "week", "month", "quarter" or "year". This can optionally be preceded by a (positive or negative) integer and a space, or followed by "s".}
 
-\item{verbose}{TRUE/FALSE. Do you want it to print out what you are doing? Useful for debugging}
+\item{Direction}{"back" for back, everything else goes forward}
 
-\item{TimeJump}{numeric: Number of units back/forward e.g. 3 days, TimeJump=3}
+\item{verbose}{Do you want it to print out what you are doing? Useful for debugging}
 }
 \value{
 Your new date
 }
 \description{
-Jump forward/backwards X number of days/weeks/months in base R.
-Sometimes you don't want to bother with packages
+Personal function to jump forward/backwards X number of days/weeks/months in base R.
+Sometimes I don't want to bother with packages
 }
 \details{
-I want to be able to easily move forward and back in time without having to use a package
-See ?seq.Date for more examples of what you can add in TimeUnit.
+This is a wrapper for \code{\link[seq.Date]{seq.Date()}}
+I want to be able to easily move forward and back in time without having to use a package.
 
-See here for other ways to achieve this and the background to this function
-https://stackoverflow.com/questions/5225823/how-to-subtract-months-from-a-date-in-r
+See here for other ways to achieve this for example using lubridate and the background to this function
+   \href{https://stackoverflow.com/questions/5225823/how-to-subtract-months-from-a-date-in-r}{https://stackoverflow.com/questions/5225823/how-to-subtract-months-from-a-date-in-r}
 }
 \examples{
 # Move 1 month back from 2000-02-29
 JumpDate("2000-02-29",2,"months","back")
 
 # Move 14 weeks forward from Jan-1-2002 and print out all output
-JumpDate(DateIn="2002-01-01",TimeBack=14,TimeUnit="weeks",Direction="forward",verbose=TRUE)
+Ans <- JumpDate(DateIn="2002-01-01",TimeJump=14,TimeUnit="week",Direction="forward",verbose=TRUE)
+print(Ans)
+}
+\seealso{
+\code{\link[seq.Date]{seq.Date()}}
 }
