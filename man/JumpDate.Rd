@@ -32,7 +32,10 @@ Sometimes you don't want to bother with packages
 }
 \details{
 I want to be able to easily move forward and back in time without having to use a package
-See ?seq.Date for more examples of what you can add in TimeUnit
+See ?seq.Date for more examples of what you can add in TimeUnit.
+
+See here for other ways to achieve this and the background to this function
+https://stackoverflow.com/questions/5225823/how-to-subtract-months-from-a-date-in-r
 }
 \examples{
 # Move 1 month back from 2000-02-29
