@@ -18,4 +18,4 @@ Imports:
 	RColorBrewer (>= 1.1.1),
 	viridis (>= 0.6),
 	paletteer (>= 1.3.0)
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.0
