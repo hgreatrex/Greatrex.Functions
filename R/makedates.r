@@ -64,21 +64,21 @@ makedates <- function(dates.in){
       dates.out$TwoDay   <- sort(c(rep(seq(1:(nrow(dates.out)/2)),2), 
                                      rep((floor(nrow(dates.out)/2)+1),LeftOver2) ))   
    }else{
-      dates.out$TwoDay   <- sort(rep(seq(1:(nrow(dates.out)/2))))
+      dates.out$TwoDay   <- sort(rep(seq(1:(nrow(dates.out)/2),2)))
    }
    
    if(LeftOver3 > 0){
       dates.out$ThreeDay   <- sort(c(rep(seq(1:(nrow(dates.out)/3)),3), 
                                          rep((floor(nrow(dates.out)/3)+1),LeftOver3) ))
    }else{
-      dates.out$ThreeDay   <- sort(rep(seq(1:(nrow(dates.out)/3))))
+      dates.out$ThreeDay   <- sort(rep(seq(1:(nrow(dates.out)/3),3)))
    }
    
    if(LeftOver4 > 0){
       dates.out$FourDay   <- sort(c(rep(seq(1:(nrow(dates.out)/4)),4), 
                                      rep((floor(nrow(dates.out)/4)+1),LeftOver4) ))
    }else{
-      dates.out$FourDay   <- sort(rep(seq(1:(nrow(dates.out)/4))))
+      dates.out$FourDay   <- sort(rep(seq(1:(nrow(dates.out)/4),4)))
    }
    
    
