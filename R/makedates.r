@@ -9,9 +9,6 @@
 #'  - Year         (numeric)    : Year (as.numeric(%Y))
 #'  - Month        (numeric)    : Month (as.numeric(%m))
 #'  - Day          (numeric)    : The day in the month (as.numeric(%d))
-#'  - TwoDay       (numeric)    : Each 2 day period (as.numeric(%d))
-#'  - ThreeDay     (numeric)    : Each 3 day period (as.numeric(%d))
-#'  - FourDay      (numeric)    : Each 4 day period (as.numeric(%d))
 #'  - Dekad        (numeric)    : The 10 day period (3 per month), from 1-36 (custom)
 #'  - Pentad       (numeric)    : The 5 day period (6 per month), from 1-72 (custom)
 #'  - DOY          (numeric)    : The Julian Day of Year e.g. 365 in a non-leap year, 366 in a leap year (as.numeric(%j))
@@ -59,9 +56,9 @@ makedates <- function(dates.in){
    # Set up two day, three day
    #------------------------------------------------------------------------------
 
-   LeftOver2 <- nrow(DateKey) - floor(nrow(DateKey)/2)*2
-   LeftOver3 <- nrow(DateKey) - floor(nrow(DateKey)/3)*3
-   LeftOver4 <- nrow(DateKey) - floor(nrow(DateKey)/4)*4
+   LeftOver2 <- nrow(dates.out) - floor(nrow(dates.out)/2)*2
+   LeftOver3 <- nrow(dates.out) - floor(nrow(dates.out)/3)*3
+   LeftOver4 <- nrow(dates.out) - floor(nrow(dates.out)/4)*4
 
    dates.out$TwoDay   <- sort(rep(seq(1:(nrow(dates.out)/2)),
                                   rep((floor(nrow(dates.out)/2)+1),LeftOver2)))
