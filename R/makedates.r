@@ -9,6 +9,9 @@
 #'  - Year         (numeric)    : Year (as.numeric(%Y))
 #'  - Month        (numeric)    : Month (as.numeric(%m))
 #'  - Day          (numeric)    : The day in the month (as.numeric(%d))
+#'  - TwoDay       (numeric)    : Each 2 day period (as.numeric(%d))
+#'  - ThreeDay     (numeric)    : Each 3 day period (as.numeric(%d))
+#'  - FourDay      (numeric)    : Each 4 day period (as.numeric(%d))
 #'  - Dekad        (numeric)    : The 10 day period (3 per month), from 1-36 (custom)
 #'  - Pentad       (numeric)    : The 5 day period (6 per month), from 1-72 (custom)
 #'  - DOY          (numeric)    : The Julian Day of Year e.g. 365 in a non-leap year, 366 in a leap year (as.numeric(%j))
@@ -45,17 +48,29 @@ makedates <- function(dates.in){
                        Year       = as.numeric(format.Date(dates.in,"%Y")),
                        Month      = as.numeric(format.Date(dates.in,"%m")),
                        Day        = as.numeric(format.Date(dates.in,"%d")),
-                       Dekad      =3,
-                       Pentad     =6,
-                       DOY        = as.numeric(format.Date(dates.in,"%j")),
-                       DOY366     =1)
+                       DOY366     = as.numeric(format.Date(dates.in,"%j")),
+                       TwoDay     = NA,
+                       ThreeDay   = NA,
+                       FourDay    = NA,
+                       Pentad     = 6,
+                       Dekad      = 3)
 
    #------------------------------------------------------------------------------
-   # Set up Dekads
+   # Set up two day, three day
    #------------------------------------------------------------------------------
-   dates.out$Dekad[(dates.out$Day > 0) &(dates.out$Day <= 20)] <- 1
-   dates.out$Dekad[(dates.out$Day > 10)&(dates.out$Day <= 20)] <- 2
-   dates.out$Dekad <- dates.out$Dekad + (3*(dates.out$Month-1))
+
+   LeftOver2 <- nrow(DateKey) - floor(nrow(DateKey)/2)*2
+   LeftOver3 <- nrow(DateKey) - floor(nrow(DateKey)/3)*3
+   LeftOver4 <- nrow(DateKey) - floor(nrow(DateKey)/4)*4
+
+   dates.out$TwoDay   <- sort(rep(seq(1:(nrow(dates.out)/2)),
+                                  rep((floor(nrow(dates.out)/2)+1),LeftOver2)))
+
+   dates.out$ThreeDay <- sort(c(rep(seq(1:(floor(nrow(dates.out)/3))),3),
+                                rep((floor(nrow(dates.out)/3)+1),LeftOver3)))
+
+   dates.out$FourDay <- sort(c(rep(seq(1:(floor(nrow(dates.out)/4))),4),
+                                rep((floor(nrow(dates.out)/4)+1),LeftOver4)))
 
    #------------------------------------------------------------------------------
    # Set up Pentads
@@ -68,23 +83,27 @@ makedates <- function(dates.in){
    dates.out$Pentad <- dates.out$Pentad + (6*(dates.out$Month-1))
 
    #------------------------------------------------------------------------------
+   # Set up Dekads
+   #------------------------------------------------------------------------------
+   dates.out$Dekad[(dates.out$Day > 0) &(dates.out$Day <= 20)] <- 1
+   dates.out$Dekad[(dates.out$Day > 10)&(dates.out$Day <= 20)] <- 2
+   dates.out$Dekad <- dates.out$Dekad + (3*(dates.out$Month-1))
+
+   #------------------------------------------------------------------------------
    # Set up numeric combinations
    #------------------------------------------------------------------------------
-   dates.out$MonthDay   <-  as.numeric(paste(sprintf("%02d",dates.out$Month),sprintf("%02d",dates.out$Day),sep=""))
-   dates.out$YearMonth  <-  as.numeric(paste(sprintf("%04d",dates.out$Year),sprintf("%02d",dates.out$Month),sep=""))
-   dates.out$YearDekad  <-  as.numeric(paste(sprintf("%04d",dates.out$Year),sprintf("%02d",dates.out$Dekad),sep=""))
-   dates.out$YearPentad <-  as.numeric(paste(sprintf("%04d",dates.out$Year),sprintf("%02d",dates.out$Pentad),sep=""))
+   dates.out$MonthDay      <-  paste(sprintf("%02d",dates.out$Month),sprintf("%02d",dates.out$Day),sep="")
+   dates.out$YearTwoDay    <-  as.numeric(paste(sprintf("%04d",dates.out$Year),sprintf("%02d",dates.out$TwoDay),sep=""))
+   dates.out$YearThreeDay  <-  as.numeric(paste(sprintf("%04d",dates.out$Year),sprintf("%02d",dates.out$ThreeDay),sep=""))
+   dates.out$YearFourDay   <-  as.numeric(paste(sprintf("%04d",dates.out$Year),sprintf("%02d",dates.out$FourDay),sep=""))
+   dates.out$YearPentad    <-  as.numeric(paste(sprintf("%04d",dates.out$Year),sprintf("%02d",dates.out$Pentad),sep=""))
+   dates.out$YearDekad     <-  as.numeric(paste(sprintf("%04d",dates.out$Year),sprintf("%02d",dates.out$Dekad),sep=""))
+   dates.out$YearMonth     <-  as.numeric(paste(sprintf("%04d",dates.out$Year),sprintf("%02d",dates.out$Month),sep=""))
 
-   tmpdate <- seq(from=as.Date("2000-01-01"),to=as.Date("2000-12-31"),by="d")
-   MonthDayTable <- data.frame(DOY366=1:366,MonthDay = as.numeric(paste(format.Date(tmpdate,"%m"),format.Date(tmpdate,"%d"),sep="")))
-   mergetable <- merge(dates.out[c("Date","MonthDay")],MonthDayTable,by=c("MonthDay"),all.x=TRUE,all.y=FALSE)
-   mergetable <- mergetable[order(mergetable$Date),]
-   dates.out$DOY366 <- mergetable$DOY366
-
-   dates.out$SomaliSeason <- "Dehr"
-   dates.out$SomaliSeason[dates.out$Dekad %in% c(3:10)] <- "Jiilal"
-   dates.out$SomaliSeason[dates.out$Dekad %in% c(11:18)] <- "Gu"
-   dates.out$SomaliSeason[dates.out$Dekad %in% c(19:27)] <- "Xagaa"
+   #dates.out$SomaliSeason <- "Dehr"
+   #dates.out$SomaliSeason[dates.out$Dekad %in% c(3:10)] <- "Jiilal"
+   #dates.out$SomaliSeason[dates.out$Dekad %in% c(11:18)] <- "Gu"
+   #dates.out$SomaliSeason[dates.out$Dekad %in% c(19:27)] <- "Xagaa"
 
    return(dates.out)
 }
