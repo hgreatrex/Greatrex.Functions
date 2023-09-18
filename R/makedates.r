@@ -46,46 +46,57 @@ makedates <- function(dates.in){
                        Month      = as.numeric(format.Date(dates.in,"%m")),
                        Day        = as.numeric(format.Date(dates.in,"%d")),
                        DOY366     = as.numeric(format.Date(dates.in,"%j")),
-                       TwoDay     = NA,
-                       ThreeDay   = NA,
-                       FourDay    = NA,
+                       TwoDay     = 2,
+                       ThreeDay   = 3,
                        Pentad     = 6,
                        Dekad      = 3)
 
-   #------------------------------------------------------------------------------
-   # Set up two day, three day
-   #------------------------------------------------------------------------------
 
-   LeftOver2 <- nrow(dates.out) - floor(nrow(dates.out)/2)*2
-   LeftOver3 <- nrow(dates.out) - floor(nrow(dates.out)/3)*3
-   LeftOver4 <- nrow(dates.out) - floor(nrow(dates.out)/4)*4
+   #------------------------------------------------------------------------------
+   # Set up Diads
+   #------------------------------------------------------------------------------
+   dates.out$TwoDay[(dates.out$Day > 0) &(dates.out$Day <= 02)]   <- 1
+   dates.out$TwoDay[(dates.out$Day > 2) &(dates.out$Day <= 04)]   <- 2
+   dates.out$TwoDay[(dates.out$Day > 4) &(dates.out$Day <= 06)]   <- 3
+   dates.out$TwoDay[(dates.out$Day > 6) &(dates.out$Day <= 08)]   <- 4
+   dates.out$TwoDay[(dates.out$Day > 8) &(dates.out$Day <= 10)]   <- 5
+   dates.out$TwoDay[(dates.out$Day >10) &(dates.out$Day <= 12)]   <- 6
+   dates.out$TwoDay[(dates.out$Day >12) &(dates.out$Day <= 14)]   <- 7
+   dates.out$TwoDay[(dates.out$Day >14) &(dates.out$Day <= 16)]   <- 8
+   dates.out$TwoDay[(dates.out$Day >16) &(dates.out$Day <= 18)]   <- 9
+   dates.out$TwoDay[(dates.out$Day >18) &(dates.out$Day <= 20)]   <- 10
+   dates.out$TwoDay[(dates.out$Day >20) &(dates.out$Day <= 22)]   <- 11
+   dates.out$TwoDay[(dates.out$Day >22) &(dates.out$Day <= 24)]   <- 12
+   dates.out$TwoDay[(dates.out$Day >24) &(dates.out$Day <= 26)]   <- 13
+   dates.out$TwoDay[(dates.out$Day >26) &(dates.out$Day <= 28)]   <- 14
+   dates.out$TwoDay[(dates.out$Day >28)                       ]   <- 15
 
-   if(LeftOver2 > 0){
-      dates.out$TwoDay   <- sort(c(rep(seq(1:(nrow(dates.out)/2)),2), 
-                                     rep((floor(nrow(dates.out)/2)+1),LeftOver2) ))   
-   }else{
-      dates.out$TwoDay   <- sort(rep(seq(1:(nrow(dates.out)/2)),2))
-   }
+   dates.out$TwoDay <- dates.out$TwoDay + (15*(dates.out$Month-1))
    
-   if(LeftOver3 > 0){
-      dates.out$ThreeDay   <- sort(c(rep(seq(1:(nrow(dates.out)/3)),3), 
-                                         rep((floor(nrow(dates.out)/3)+1),LeftOver3) ))
-   }else{
-      dates.out$ThreeDay   <- sort(rep(seq(1:(nrow(dates.out)/3)),3))
-   }
+   dates.out$TwoDay[dates.out$TwoDay]
    
-   if(LeftOver4 > 0){
-      dates.out$FourDay   <- sort(c(rep(seq(1:(nrow(dates.out)/4)),4), 
-                                     rep((floor(nrow(dates.out)/4)+1),LeftOver4) ))
-   }else{
-      dates.out$FourDay   <- sort(rep(seq(1:(nrow(dates.out)/4)),4))
-   }
+   #------------------------------------------------------------------------------
+   # Set up Triads
+   #------------------------------------------------------------------------------
+   dates.out$ThreeDay[(dates.out$Day > 0) &(dates.out$Day <= 03)]   <- 1
+   dates.out$ThreeDay[(dates.out$Day > 3) &(dates.out$Day <= 06)]   <- 2
+   dates.out$ThreeDay[(dates.out$Day > 6) &(dates.out$Day <= 09)]   <- 3
+   dates.out$ThreeDay[(dates.out$Day > 9) &(dates.out$Day <= 12)]   <- 4
+   dates.out$ThreeDay[(dates.out$Day >12) &(dates.out$Day <= 15)]   <- 5
+   dates.out$ThreeDay[(dates.out$Day >15) &(dates.out$Day <= 18)]   <- 6
+   dates.out$ThreeDay[(dates.out$Day >18) &(dates.out$Day <= 21)]   <- 7
+   dates.out$ThreeDay[(dates.out$Day >21) &(dates.out$Day <= 24)]   <- 8
+   dates.out$ThreeDay[(dates.out$Day >24) &(dates.out$Day <= 27)]   <- 9
+   dates.out$ThreeDay[(dates.out$Day >27)                       ]   <- 10
+   
+   dates.out$ThreeDay <- dates.out$ThreeDay + (10*(dates.out$Month-1))
+   
    
    
    #------------------------------------------------------------------------------
    # Set up Pentads
    #------------------------------------------------------------------------------
-   dates.out$Pentad[(dates.out$Day > 0) &(dates.out$Day <= 25)] <- 1
+   dates.out$Pentad[(dates.out$Day > 0) &(dates.out$Day <= 05)] <- 1
    dates.out$Pentad[(dates.out$Day > 5) &(dates.out$Day <= 10)] <- 2
    dates.out$Pentad[(dates.out$Day > 10)&(dates.out$Day <= 15)] <- 3
    dates.out$Pentad[(dates.out$Day > 15)&(dates.out$Day <= 20)] <- 4
@@ -95,7 +106,7 @@ makedates <- function(dates.in){
    #------------------------------------------------------------------------------
    # Set up Dekads
    #------------------------------------------------------------------------------
-   dates.out$Dekad[(dates.out$Day > 0) &(dates.out$Day <= 20)] <- 1
+   dates.out$Dekad[(dates.out$Day > 0) &(dates.out$Day <= 10)] <- 1
    dates.out$Dekad[(dates.out$Day > 10)&(dates.out$Day <= 20)] <- 2
    dates.out$Dekad <- dates.out$Dekad + (3*(dates.out$Month-1))
 
@@ -105,7 +116,6 @@ makedates <- function(dates.in){
    dates.out$MonthDay      <-  paste(sprintf("%02d",dates.out$Month),sprintf("%02d",dates.out$Day),sep="")
    dates.out$YearTwoDay    <-  as.numeric(paste(sprintf("%05d",dates.out$Year),sprintf("%03d",dates.out$TwoDay),sep=""))
    dates.out$YearThreeDay  <-  as.numeric(paste(sprintf("%05d",dates.out$Year),sprintf("%03d",dates.out$ThreeDay),sep=""))
-   dates.out$YearFourDay   <-  as.numeric(paste(sprintf("%05d",dates.out$Year),sprintf("%03d",dates.out$FourDay),sep=""))
    dates.out$YearPentad    <-  as.numeric(paste(sprintf("%04d",dates.out$Year),sprintf("%02d",dates.out$Pentad),sep=""))
    dates.out$YearDekad     <-  as.numeric(paste(sprintf("%04d",dates.out$Year),sprintf("%02d",dates.out$Dekad),sep=""))
    dates.out$YearMonth     <-  as.numeric(paste(sprintf("%04d",dates.out$Year),sprintf("%02d",dates.out$Month),sep=""))
