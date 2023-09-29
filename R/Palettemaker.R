@@ -60,9 +60,9 @@
 #---------------------------------------------------
 
 palettemaker <- function(package,pal,n,reverse=FALSE,removestart=FALSE,removeend=FALSE,rgb=FALSE){
-   #require(RColorBrewer)
-   #require(viridis)
-   #require(paletteer)
+   require(RColorBrewer)
+   require(viridis)
+   require(paletteer)
 
    if(tolower(package) %in% "brewer"){
      inner <- brewer.pal(n = 9, name = pal)

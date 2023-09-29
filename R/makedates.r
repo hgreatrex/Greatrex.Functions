@@ -1,4 +1,4 @@
-#' Make a standard table of dates from the R datelist you feed it
+#' Make a standard table of dates from the R datelist you feed it.
 #'
 #' Sometimes it is nice to just extract the attributes of an R date-list rather than messing with the date format
 #' This takes a vector of dates and outputs a data.frame containing the following
@@ -52,11 +52,11 @@ makedates <- function(dates.in){
                        Pentad     = 6,
                        Dekad      = 3)
 
- dates.out$DOY366[!(dates.out$Year %% 4 == 0 & dates.out$Year %% 100 != 0 | dates.out$Year %% 400 == 0) 
-              & dates.out$Month >= 3] <- dates.out$DOY366[!(dates.out$Year %% 4 == 0 & dates.out$Year %% 100 != 0 | dates.out$Year %% 400 == 0) 
+ dates.out$DOY366[!(dates.out$Year %% 4 == 0 & dates.out$Year %% 100 != 0 | dates.out$Year %% 400 == 0)
+              & dates.out$Month >= 3] <- dates.out$DOY366[!(dates.out$Year %% 4 == 0 & dates.out$Year %% 100 != 0 | dates.out$Year %% 400 == 0)
                                                       & dates.out$Month >= 3]+1
- 
-   
+
+
    #------------------------------------------------------------------------------
    # Set up Diads
    #------------------------------------------------------------------------------
@@ -77,9 +77,9 @@ makedates <- function(dates.in){
    dates.out$TwoDay[(dates.out$Day >28)                       ]   <- 15
 
    dates.out$TwoDay <- dates.out$TwoDay + (15*(dates.out$Month-1))
-   
+
    dates.out$TwoDay[dates.out$TwoDay]
-   
+
    #------------------------------------------------------------------------------
    # Set up Triads
    #------------------------------------------------------------------------------
@@ -93,11 +93,11 @@ makedates <- function(dates.in){
    dates.out$ThreeDay[(dates.out$Day >21) &(dates.out$Day <= 24)]   <- 8
    dates.out$ThreeDay[(dates.out$Day >24) &(dates.out$Day <= 27)]   <- 9
    dates.out$ThreeDay[(dates.out$Day >27)                       ]   <- 10
-   
+
    dates.out$ThreeDay <- dates.out$ThreeDay + (10*(dates.out$Month-1))
-   
-   
-   
+
+
+
    #------------------------------------------------------------------------------
    # Set up Pentads
    #------------------------------------------------------------------------------
