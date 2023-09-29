@@ -119,6 +119,7 @@ makedates <- function(dates.in){
    # Set up numeric combinations
    #------------------------------------------------------------------------------
    dates.out$MonthDay      <-  paste(sprintf("%02d",dates.out$Month),sprintf("%02d",dates.out$Day),sep="")
+   dates.out$YearDOY366    <-  as.numeric(paste(sprintf("%05d",dates.out$Year),sprintf("%03d",dates.out$DOY366),sep=""))
    dates.out$YearTwoDay    <-  as.numeric(paste(sprintf("%05d",dates.out$Year),sprintf("%03d",dates.out$TwoDay),sep=""))
    dates.out$YearThreeDay  <-  as.numeric(paste(sprintf("%05d",dates.out$Year),sprintf("%03d",dates.out$ThreeDay),sep=""))
    dates.out$YearPentad    <-  as.numeric(paste(sprintf("%04d",dates.out$Year),sprintf("%02d",dates.out$Pentad),sep=""))
