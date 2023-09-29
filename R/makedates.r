@@ -45,13 +45,18 @@ makedates <- function(dates.in){
                        Year       = as.numeric(format.Date(dates.in,"%Y")),
                        Month      = as.numeric(format.Date(dates.in,"%m")),
                        Day        = as.numeric(format.Date(dates.in,"%d")),
+                       doy        = as.numeric(format.Date(dates.in,"%j")),
                        DOY366     = as.numeric(format.Date(dates.in,"%j")),
                        TwoDay     = 2,
                        ThreeDay   = 3,
                        Pentad     = 6,
                        Dekad      = 3)
 
-
+ dates.out$DOY366[!(dates.out$Year %% 4 == 0 & dates.out$Year %% 100 != 0 | dates.out$Year %% 400 == 0) 
+              & dates.out$Month >= 3] <- dates.out$DOY366[!(dates.out$Year %% 4 == 0 & dates.out$Year %% 100 != 0 | dates.out$Year %% 400 == 0) 
+                                                      & dates.out$Month >= 3]+1
+ 
+   
    #------------------------------------------------------------------------------
    # Set up Diads
    #------------------------------------------------------------------------------
